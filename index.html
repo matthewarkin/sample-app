@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/shop-6f6769159b39f9282d8c44b42ea6a917.css" type="text/css">
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="js/ui.js"></script>
   </head>
 
   <body data-twttr-rendered="true">
@@ -147,7 +148,7 @@
         <div style="border-bottom: none" class="box-content">
           <div style="display:none;" class="row alert fade in" id="alert-notification"></div>
           <div class="row ac">
-            <div><button style="font-size:1.1em" class="btn btn-green btn-tall btn-wide btn-checkout-stripe" id="btn-checkout">Checkout</button></div>
+            <div><button style="font-size:1.1em" class="btn btn-green btn-tall btn-wide" id="btn-goto-checkout">Checkout</button></div>
           </div> <!-- .row.ac -->
         </div>   <!-- .box-content -->
 
@@ -217,7 +218,7 @@
         <!-- Payment methods form -->
         <div class="box-content" id="order-buy-card">
           <div class="row">
-            <p class="title ac">Pay with a Credit/Debit Card</p>
+            <p class="title ac">Credit/Debit Card Information</p>
             <div class="row">
               <span class="credit-card-icon shop-cc-icon" id="unknown"></span>
               <input type="tel" data-container="body" data-cart-payment="card_number" placeholder="Card Number" class="input-block-level nm">
@@ -283,7 +284,7 @@
 
           <div class="row ac">
             <div><button style="font-size:1.1em" class="btn btn-green btn-tall btn-wide btn-checkout-stripe" id="btn-checkout">Place Order</button></div>
-            <p class="small"><a href="#" class="btn-cancel"><i class="icon-pencil"></i> Modify Order</a></p>
+            <p class="small"><a href="#" id="a-modify-order" class="btn-cancel"><i class="icon-pencil"></i> Modify Order</a></p>
           </div> <!-- .row.ac -->
         </div>   <!-- .box-content -->
       </div>     <!-- #order-buy.row.nm -->
