@@ -1,55 +1,59 @@
 $(document).ready(function() {
 
-  //
-  // Navigation between pages.
-  //
+  var ui = window.ui || {
 
-  //
-  // "Checkout" button takes user to "#order-buy"
-  $('#btn-goto-checkout').click(function(e) {
-    e.preventDefault();
+    defaults: {
+      log: true,
+      routeTransitionDuration: 1000
+    },
 
-    // Hide Order Product (first) page
-    $('#order-product').hide('fast');
+    //
+    // Use the ID of the page container element to identify the route
+    routes: {
+      products: '#order-product',
+      buy: '#order-buy',
+      confirmation: '#order-confirmation',
 
-    // Show Order Buy (second) page
-    $('#order-buy').show('fast');
+      current: null
+    },
 
-    // Scroll to top of the second page
-    $('html, body').animate({
-      scrollTop: 0
-    }, 1000);
-  });
+    //
+    // Initialize the UI controller
+    init: function (options) {
+      // Adapt the defaults
+      $.extend(this.defaults, options);
 
-  //
-  // "Modify order" link takes you back to "#order-product"
-  $('#a-modify-order').click(function(e) {
+      // Set the starting route to be the products page
+      this.routes.current = this.routes.products;
+    },
 
-    // Hide Order Buy (second) page
-    $('#order-buy').hide('fast');
+    //
+    // Transition from the current route
+    //
+    // params (object):
+    //   * elementToScrollTo (string): selector for the element to scroll to after route transition
+    routeTo: function (route, params) {
+      params = params || {};
 
-    // Show Order Confirmation (third) page
-    $('#order-product').show('fast');
+      this.defaults.log && console.log('Navigating from %s to %s', this.routes.current, route);
 
-    // Scroll to top of the third page
-    $('html, body').animate({
-      scrollTop: $('#order-items').offset().top
-    }, 1000);
-  });
+      // Hide the current route page
+      $(this.routes.current).hide('fast');
 
-  //
-  // "Place Order" link takes you to "#order-confirmation"
-  $('#btn-checkout').click(function(e) {
+      // Show the next page
+      $(route).show('fast');
 
-    // Hide Order Buy (second) page
-    $('#order-buy').hide('fast');
+      // Reset the current page
+      this.routes.current = route;
 
-    // Show Order Confirmation (third) page
-    $('#order-confirmation').show('fast');
+      // Scroll the page
+      $('html, body').animate({
+        scrollTop: (params.elementToScrollTo) ? $(params.elementToScrollTo).offset().top : 0
+      }, this.defaults.routeTransitionDuration);
+    }
 
-    // Scroll to top of the confirmation page
-    $('html, body').animate({
-      scrollTop: 0
-    }, 1000);
-  });
+  };
+
+  // Hook the UI controller to the global object
+  window.ui = ui;
 });
