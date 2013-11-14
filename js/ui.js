@@ -28,13 +28,28 @@ $(document).ready(function() {
     // Hide Order Buy (second) page
     $('#order-buy').hide('fast');
 
-    // Show Order Product (first) page
+    // Show Order Confirmation (third) page
     $('#order-product').show('fast');
 
-    // Scroll to the item products section of the first page
+    // Scroll to top of the third page
     $('html, body').animate({
       scrollTop: $('#order-items').offset().top
     }, 1000);
   });
 
+  //
+  // "Place Order" link takes you to "#order-confirmation"
+  $('#btn-checkout').click(function(e) {
+
+    // Hide Order Buy (second) page
+    $('#order-buy').hide('fast');
+
+    // Show Order Confirmation (third) page
+    $('#order-confirmation').show('fast');
+
+    // Scroll to top of the confirmation page
+    $('html, body').animate({
+      scrollTop: 0
+    }, 1000);
+  });
 });

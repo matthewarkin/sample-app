@@ -290,12 +290,42 @@
       </div>     <!-- #order-buy.row.nm -->
 
 
-      <!-- Bottom of the page -->
-      <div style="clear:both;" id="order-clear">&nbsp;</div>
+      <!-- ------------------------------   #order-buy.row.nm   ------------------------------ -->
+      <!-- ------------------------------                       ------------------------------ -->
+      <!-- ------------------------------   Order  item  page   ------------------------------ -->
+
+      <div id="order-confirmation" class="row nm" style="display:none;">
+        <div class="box-content ac">
+          <h5>Thanks for Your Order!</h5>
+          <p class="title"><strong>Your Order ID: <span class="label-order-id">[order ID number]</span></strong></p>
+          <p>You'll receive an e-mail confirmation shortly for your records.</p>
+
+          <p class="subtitle"><strong><i class="icon-heart"></i> Show your support by sharing with friends!</strong></p>
+          <div class="row">
+            <ul class="share-list clearfix">
+              <li>
+                <!-- CURRENTLY A STUB THE URL FOR FB!!! -->
+                <div class="fb-like al" data-href="https://www.trycelery.com/shop/koala" data-send="false" data-layout="button_count" data-height="20" data-width="47" data-show-faces="false" data-font="tahoma"></div>
+              </li>
+              <li>
+                <!-- CURRENTLY A STUB THE URL FOR PINTEREST!!! -->
+                <a href="//www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.trycelery.com%2Fshop%2Fkoala&media=https%3A%2F%2Fd51u56kncglox.cloudfront.net%2F59ca6ccf-fae9-4ded-b845-2eb9620118b5.jpg&description=Check%20out%20airbrite.io%20powered%20koala%20shop" data-pin-do="buttonPin" data-pin-config="beside"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>
+              </li>
+              <li>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{config.prod_url}}/shop/{{this.slug}}" data-text="Check out {{this.name}}{{#if seller.twitter}} from {{seller.twitter}}{{else}} on Celery{{/if}}!" data-via="trycelery" data-dnt="true" data-count="true">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+              </li>
+            </ul> <!-- .share-list.clearfix -->
+          </div>  <!-- .row -->
+        </div>    <!-- .box-content.ac -->
+      </div>      <!-- #order-confirmation.row.nm -->
 
       <!-- ------------------------------                       ------------------------------ -->
       <!-- ------------------------------  End  Site  Container ------------------------------ -->
       <!-- ------------------------------                       ------------------------------ -->
+
+      <!-- Bottom of the page -->
+      <div style="clear:both;" id="order-clear">&nbsp;</div>
 
     </div> <!-- #body.box.box-rounded -->
 
