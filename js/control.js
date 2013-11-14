@@ -22,7 +22,7 @@ $(document).ready(function() {
     e.preventDefault();
 
     // Show Order Confirmation (third) page
-    window.ui.routeTo('#order-product');
+    window.ui.routeTo('#order-product', '#order-items');
   });
 
   //

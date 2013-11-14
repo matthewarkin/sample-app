@@ -25,6 +25,8 @@ $(document).ready(function() {
 
       // Set the starting route to be the products page
       this.routes.current = this.routes.products;
+
+      this.defaults.log && console.log('window.ui component initialized');
     },
 
     //
@@ -32,7 +34,13 @@ $(document).ready(function() {
     //
     // params (object):
     //   * elementToScrollTo (string): selector for the element to scroll to after route transition
+    //
+    // params (string): the equivalente of the 'elementToScrollTo' in the object definition
     routeTo: function (route, params) {
+      if (typeof params === 'string')
+        params = {
+          elementToScrollTo: params
+        }
       params = params || {};
 
       this.defaults.log && console.log('Navigating from %s to %s', this.routes.current, route);
