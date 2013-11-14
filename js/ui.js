@@ -58,6 +58,15 @@ $(document).ready(function() {
       $('html, body').animate({
         scrollTop: (params.elementToScrollTo) ? $(params.elementToScrollTo).offset().top : 0
       }, this.defaults.routeTransitionDuration);
+    },
+
+    //
+    // Validate the fields in the item form
+    validateItem: function () {
+      // TODO: Validate color
+
+      // Stub implementation
+      return false;
     }
 
   };

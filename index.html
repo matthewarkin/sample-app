@@ -47,7 +47,7 @@
         <div class="box-content box-options">
           <div class="row">
             <p class="subtitle"><strong>Choose a color</strong></p>
-            <select data-cart-item-option="Choose a color" class="input-block-level select-option">
+            <select id="select-color" class="input-block-level select-option">
               <option value="">-- Please Select --</option>
               <option value="Red" data-cart-item-option-value="Red" data-cart-item-option-price="0">Red </option>
               <option value="Blue" data-cart-item-option-value="Blue" data-cart-item-option-price="-1000">Blue ( -$10.00 )</option>
@@ -57,7 +57,7 @@
 
           <div class="row">
             <p class="subtitle"><strong>What Size?</strong></p>
-            <select data-cart-item-option="What Size?" class="input-block-level select-option">
+            <select id="select-size" class="input-block-level select-option">
               <option value="small" data-cart-item-option-value="small" data-cart-item-option-price="0">small </option>
               <option value="medium" data-cart-item-option-value="medium" data-cart-item-option-price="0">medium </option>
             </select>
@@ -102,6 +102,7 @@
             </thead>
 
             <tbody data-cart-table-element="body">
+
               <tr>
 	            <td colspan="3">
 		          <div class="row">
@@ -131,6 +132,7 @@
 		          </div> <!-- .row -->
 	            </td>
               </tr>
+
             </tbody>
 
             <tfoot>
