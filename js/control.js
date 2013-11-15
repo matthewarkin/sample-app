@@ -40,13 +40,13 @@ $(document).ready(function() {
 
   //
   // React to changes in "choose color" of the item form
-  $('#select-color').on('change', function (e) {
+  $('#order-product #select-color').on('change', function (e) {
     console.log('Not implemented yet');
   });
 
   //
   // React to changes in quantity of the item form
-  $('#select-color').on('change', function (e) {
+  $('#order-product .select-quantity').on('change', function (e) {
     console.log('Not implemented yet');
   });
 
@@ -55,19 +55,27 @@ $(document).ready(function() {
   $('.btn-add').on('click', function (e) {
     alert('Not yet implemented');
 
-    // TODO: validate product form
-    // window.ui.validateItem() || return;
-
     // TODO: collect data
-    // var item = window.ui.itemData();
-
-    // TODO: commit to cart
-    // var addedToCart = window.cart.addItem(item);
-    // if (! addedToCart) {
-    //   console.log('could not add the following item to the cart:');
-    //   console.dir(item);
-    //   return;
-    //}
+    // window.ui.itemData(function (item) {
+    //
+    //   TODO: validate product form
+    //   that.validateData(item, function (invalidFields, item) {
+    //     if (invalidFields.length >= 0) {
+    //       // TODO: mark data as invalid in ui
+    //       window.ui.invalidData(invalidFields);
+    //       return;
+    //     }
+    //
+    //     // TODO: commit to cart
+    //     window.cart.addItem(item, function (err) {
+    //       if (err) {
+    //         console.log('could not add the following item to the cart:');
+    //         console.dir(item);
+    //         return;
+    //       }
+    //     });
+    //   });
+    // });
   });
 
   //

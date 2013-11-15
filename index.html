@@ -49,17 +49,17 @@
             <p class="subtitle"><strong>Choose a color</strong></p>
             <select id="select-color" class="input-block-level select-option">
               <option value="">-- Please Select --</option>
-              <option value="Red" data-cart-item-option-value="Red" data-cart-item-option-price="0">Red </option>
-              <option value="Blue" data-cart-item-option-value="Blue" data-cart-item-option-price="-1000">Blue ( -$10.00 )</option>
-              <option value="Green" data-cart-item-option-value="Green" data-cart-item-option-price="2000">Green ( +$20.00 )</option>
+              <option value="Red" data-price="0">Red </option>
+              <option value="Blue" data-price="1000">Blue ( $10.00 )</option>
+              <option value="Green" data-price="2000">Green ( +$20.00 )</option>
             </select>
           </div> <!-- .row -->
 
           <div class="row">
             <p class="subtitle"><strong>What Size?</strong></p>
             <select id="select-size" class="input-block-level select-option">
-              <option value="small" data-cart-item-option-value="small" data-cart-item-option-price="0">small </option>
-              <option value="medium" data-cart-item-option-value="medium" data-cart-item-option-price="0">medium </option>
+              <option value="small">small </option>
+              <option value="medium">medium </option>
             </select>
           </div> <!-- .row -->
         </div>   <!-- .box-content.box-options -->
@@ -68,9 +68,7 @@
           <div class="row clearfix">
 
             <div class="fl">
-              <h5 data-cart-item-deposit="50" data-cart-item-price="110" class="lh-34">$1.10</h5>
-              <input type="hidden" data-cart-item-weight="">
-              <input type="hidden" data-cart-item-quantity-limit="0">
+              <h5 id="#item-total-price">$0</h5>
             </div> <!-- .fl -->
 
             <div class="fr">
