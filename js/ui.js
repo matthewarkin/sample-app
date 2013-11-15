@@ -69,6 +69,7 @@ $(document).ready(function() {
     //   {
     //     price: "2000",
     //     sku: "some-sku-value",
+    //     quantity: "3",
     //     color: {
     //       selector: '#order-product #select-color',
     //       value: 'Red'
@@ -104,6 +105,48 @@ $(document).ready(function() {
       callback(null, payload);
     },
 
+
+    //
+    // Allow to react to user interaction
+    //
+
+    //
+    // Update the per item sub-total.
+    //
+    // Takes as input an object like the one returned from itemData(), and a number for the sub-total
+    addItem: function (item, total) {
+      var html  = '<tr>';
+      html += '<td colspan="3">';
+      html += '<div class="row">';
+      html += '<div style="margin-left:10px;" class="fr">';
+      html += '<strong>' + item.quantity + ' @ $' + item.price / 100 + '</strong>';
+      html += '</div>';
+      html += '<div>';
+      html += '<strong>KOala</strong>';
+      html += '</div>';
+      html += '</div> <!-- .row -->';
+      html += '<div class="row">';
+      html += '<div>';
+      html += 'Choose a color<strong>&nbsp;&nbsp;' + item.color.value + '</strong>';
+      html += '</div>';
+      html += '</div> <!-- .row -->';
+      html += '<div class="row">';
+      html += '<div>';
+      html += 'What Size?<strong>&nbsp;&nbsp;' + item.size.value + '</strong>';
+      html += '</div>';
+      html += '</div> <!-- .row -->';
+      html += '<div class="row">';
+      html += '<small><a class="remove-item" data-sku="' + item.sku + '" href="#">Remove Item</a></small>';
+      html += '</div> <!-- .row -->';
+      html += '</td>';
+      html += '</tr>';
+
+      // Inject the new item to the list
+      $('#order-product tbody').append(html);
+
+      // Update the subtotal
+      $('#order-product #subtotal').text(total / 100);
+    },
 
     //
     // Validation notifications

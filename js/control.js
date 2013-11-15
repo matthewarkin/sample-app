@@ -99,6 +99,9 @@ $(document).ready(function() {
             console.dir(itemData);
             return;
           }
+
+          // Update the items list in the UI
+          window.ui.addItem(item, window.cart.fullPrice);
         });
       });
     });

@@ -49,9 +49,9 @@
             <p class="subtitle"><strong>Choose a color</strong></p>
             <select id="select-color" class="input-block-level select-option">
               <option value="">-- Please Select --</option>
-              <option value="Red" data-price="0">Red </option>
-              <option value="Blue" data-price="1000" data-sku="test-sku-1">Blue ( $10.00 )</option>
-              <option value="Green" data-price="2000" data-sku="test-sku-2">Green ( +$20.00 )</option>
+              <option value="Red" data-price="5000" data-sku="test-sku-1">Red ( $5.00 )</option>
+              <option value="Blue" data-price="1000" data-sku="test-sku-2">Blue ( $1.00 )</option>
+              <option value="Green" data-price="2000" data-sku="test-sku-3">Green ( $20.00 )</option>
             </select>
           </div> <!-- .row -->
 
@@ -99,48 +99,16 @@
               </tr>
             </thead>
 
-            <tbody data-cart-table-element="body">
-
-              <tr>
-	            <td colspan="3">
-		          <div class="row">
-			        <div style="margin-left:10px;" class="fr">
-				      <strong>2 @ $1.10</strong>
-			        </div>
-			        <div>
-				      <strong>KOala</strong>
-			        </div>
-		          </div> <!-- .row -->
-
-
-			      <div class="row">
-			        <div>
-				      Choose a color<strong>:&nbsp;&nbsp;Red</strong>
-			        </div>
-			      </div> <!-- .row -->
-
-			      <div class="row">
-			        <div>
-				      What Size?<strong>:&nbsp;&nbsp;small</strong>
-			        </div>
-			      </div> <!-- .row -->
-
-		          <div class="row">
-			        <small><a href="javascript:cart.remove(0);">Remove Item</a></small>
-		          </div> <!-- .row -->
-	            </td>
-              </tr>
-
-            </tbody>
+            <tbody></tbody>
 
             <tfoot>
               <tr style="display: none;">
                 <td class="al" colspan="2">Discount</td>
-                <td class="ar"><span data-cart-table-element="discount">($0.00)</span></td>
+                <td class="ar">($<span data-cart-table-element="discount">0.00</span>)</td>
               </tr>
               <tr>
                 <td class="al" colspan="2"><strong>Subtotal</strong></td>
-                <td class="ar"><strong><span data-cart-table-element="subtotal">$2.20</span></strong></td>
+                <td class="ar"><strong>$<span id="subtotal">0</span></strong></td>
               </tr>
             </tfoot>
           </table>
