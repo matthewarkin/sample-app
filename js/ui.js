@@ -115,6 +115,8 @@ $(document).ready(function() {
     //
     // Takes as input an object like the one returned from itemData(), and a number for the sub-total
     addItem: function (item, total) {
+
+      // The item element inlines the code to call removeItem() in the controller.
       var html  = '<tr>';
       html += '<td colspan="3">';
       html += '<div class="row">';
@@ -136,7 +138,7 @@ $(document).ready(function() {
       html += '</div>';
       html += '</div> <!-- .row -->';
       html += '<div class="row">';
-      html += '<small><a class="remove-item" data-sku="' + item.sku + '" href="#">Remove Item</a></small>';
+      html += '<small><a class="remove-item" data-price="' + item.price + '" data-quantity="' + item.quantity + '" data-sku="' + item.sku + '" href="#order-items" onclick="javascript:control.removeItem(this);return false;">Remove Item</a></small>';
       html += '</div> <!-- .row -->';
       html += '</td>';
       html += '</tr>';
@@ -146,6 +148,23 @@ $(document).ready(function() {
 
       // Update the subtotal
       $('#order-product #subtotal').text(total / 100);
+    },
+
+    //
+    // Remove an item from the order list
+    //
+    // Takes the element that triggered the remove event, and the new subtotal
+    removeItem: function ($removeElem, total) {
+      // Get the parent element of the item in the list
+      var itemElem = $removeElem.parent().parent().parent().parent();
+
+      // Remove the item element from the list
+      itemElem.remove();
+      this.config.log && console.log('window.ui: removed item.');
+
+      // Update the subtotal
+      $('#order-product #subtotal').text(total / 100);
+      this.config.log && console.log('window.ui: updated sub-total.');
     },
 
     //
