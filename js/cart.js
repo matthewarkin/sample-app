@@ -17,7 +17,7 @@ removeItem:function (b) {a.load("localStorage");b=c(b);a.removeAttribute(b);a.sa
   $.support.cors = true;
 
   var cart = window.cart || {
-    defaults: {
+    config: {
       log: true
     },
 
@@ -30,15 +30,19 @@ removeItem:function (b) {a.load("localStorage");b=c(b);a.removeAttribute(b);a.sa
     items: [],
 
     //
+    // Full price for the entire cart (no discounts applied)
+    fullPrice: 0,
+
+    //
     // Constructor
     init: function (options) {
-      // Adapt the defaults
-      $.extend(this.defaults, options);
+      // Adapt the config
+      $.extend(this.config, options);
 
       // Load cart from local storage if exists
       this.load();
 
-      this.defaults.log && console.log('window.cart component initialized');
+      this.config.log && console.log('window.cart component initialized');
     },
 
     //
@@ -46,9 +50,10 @@ removeItem:function (b) {a.load("localStorage");b=c(b);a.removeAttribute(b);a.sa
     load: function () {
       try {
         var jsonItems = localStorage.getItem(cart.namespace + "_items");
+        var jsonItems = localStorage.getItem(cart.namespace + "_fullPrice");
         if (jsonItems) {
           cart.items = JSON.parse(jsonItems);
-          this.defaults.log && console.log('loaded cart data from local storage');
+          this.config.log && console.log('loaded cart data from local storage');
         }
       } catch(e) {}
     },
@@ -58,7 +63,8 @@ removeItem:function (b) {a.load("localStorage");b=c(b);a.removeAttribute(b);a.sa
     save: function () {
       try {
         localStorage.setItem(cart.namespace + "_items", JSON.stringify(cart.items));
-        this.defaults.log && console.log('saved cart data to local storage');
+        localStorage.setItem(cart.namespace + "_fullPrice", JSON.stringify(cart.fullPrice));
+        this.config.log && console.log('saved cart data to local storage');
       } catch(e) {}
     },
 
@@ -67,8 +73,37 @@ removeItem:function (b) {a.load("localStorage");b=c(b);a.removeAttribute(b);a.sa
     clear: function () {
       try {
         localStorage.removeItem(cart.namespace + "_items");
-        this.defaults.log && console.log('cleared cart data in local storage');
+        localStorage.removeItem(cart.namespace + "_fullPrice");
+        this.config.log && console.log('cleared cart data in local storage');
       } catch(e) {}
+    },
+
+    //
+    // Add an item to the cart. Takes two params.
+    // First param is an object:
+    //   {
+    //     sku: 'some-sky-value',
+    //     price: 1000,
+    //     quantity: 2
+    //   }
+    // Second param is a function of type function(err){...}
+    addItem: function (item, callback) {
+      this.config.log && console.log('window.cart: adding item to cart...');
+      if (item.sku !== undefined) callback('item has no SKU');
+      if (item.price !== undefined) callback('item has no price');
+      if (item.quantity !== undefined) callback('item has no quantity');
+
+      // Acculumulate the price of this item/s
+      this.fullPrice += item.price * item.quantity;
+      // Add to the line items.
+      this.items.push({
+        sku: item.sku,
+        quantity: item.quantity
+      });
+
+      this.config.log && console.log('window.cart: added item to the cart')
+
+      callback(null);
     }
   }
 

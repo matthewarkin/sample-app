@@ -5,6 +5,26 @@
 $(document).ready(function() {
 
   //
+  // Data validation
+  //
+  var validators = {
+
+    //
+    // Validate the item data
+    //
+    // Takes a item object as it comes from the UI, and a callback of the form
+    // function (invalidFields, item) { ... } where "invalidFields" will be an
+    // array of selector strings to identify elements in the UI with invalid
+    // data (or empty array if data is valid), and the "item" is a pass through
+    // param.
+    validateData: function (item, callback) {
+      // TODO: implement
+      callback([], item);
+    }
+  }
+
+
+  //
   // Navigation between pages.
   //
 
@@ -53,29 +73,37 @@ $(document).ready(function() {
   //
   // "Add To Order"
   $('.btn-add').on('click', function (e) {
-    alert('Not yet implemented');
+    // Fetch the data from the UI
+    window.ui.itemData(function (err, item) {
+      if (err) throw new Error('Error while fetching data from UI');
 
-    // TODO: collect data
-    // window.ui.itemData(function (item) {
-    //
-    //   TODO: validate product form
-    //   that.validateData(item, function (invalidFields, item) {
-    //     if (invalidFields.length >= 0) {
-    //       // TODO: mark data as invalid in ui
-    //       window.ui.invalidData(invalidFields);
-    //       return;
-    //     }
-    //
-    //     // TODO: commit to cart
-    //     window.cart.addItem(item, function (err) {
-    //       if (err) {
-    //         console.log('could not add the following item to the cart:');
-    //         console.dir(item);
-    //         return;
-    //       }
-    //     });
-    //   });
-    // });
+      // Validate the raw data
+      validators.validateData(item, function (invalidFields, item) {
+        // If data is invalid, inform the UI using the element selectors
+        if (invalidFields.length >= 0) {
+          window.ui.invalidData(invalidFields);
+          return;
+        }
+
+        // Build an item object for the cart
+        var itemData = {
+          sku: item.sku,
+          price: parseInt(item.price, 10),
+          quantity: parseInt(item.quantity, 10),
+        }
+
+        // Send item to cart
+        window.cart.addItem(itemData, function (err) {
+          if (err) {
+            console.log('could not add the following item to the cart:');
+            console.dir(itemData);
+            return;
+          }
+          // Commit the cart
+          window.cart.save();
+        });
+      });
+    });
   });
 
   //
