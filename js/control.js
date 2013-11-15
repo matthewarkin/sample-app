@@ -80,7 +80,7 @@ $(document).ready(function() {
       // Validate the raw data
       validators.validateData(item, function (invalidFields, item) {
         // If data is invalid, inform the UI using the element selectors
-        if (invalidFields.length >= 0) {
+        if (invalidFields && (invalidFields.length > 0)) {
           window.ui.invalidData(invalidFields);
           return;
         }
@@ -99,8 +99,6 @@ $(document).ready(function() {
             console.dir(itemData);
             return;
           }
-          // Commit the cart
-          window.cart.save();
         });
       });
     });

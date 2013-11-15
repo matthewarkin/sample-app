@@ -89,9 +89,9 @@ removeItem:function (b) {a.load("localStorage");b=c(b);a.removeAttribute(b);a.sa
     // Second param is a function of type function(err){...}
     addItem: function (item, callback) {
       this.config.log && console.log('window.cart: adding item to cart...');
-      if (item.sku !== undefined) callback('item has no SKU');
-      if (item.price !== undefined) callback('item has no price');
-      if (item.quantity !== undefined) callback('item has no quantity');
+      if (item.sku === undefined) { callback('item has no SKU') ; return }
+      if (item.price === undefined) { callback('item has no price') ; return }
+      if (item.quantity === undefined) { callback('item has no quantity') ; return }
 
       // Acculumulate the price of this item/s
       this.fullPrice += item.price * item.quantity;
