@@ -138,7 +138,7 @@ $(document).ready(function() {
       html += '</div>';
       html += '</div> <!-- .row -->';
       html += '<div class="row">';
-      html += '<small><a class="remove-item" data-price="' + item.price + '" data-quantity="' + item.quantity + '" data-sku="' + item.sku + '" href="#order-items" onclick="javascript:control.removeItem(this);return false;">Remove Item</a></small>';
+      html += '<small><a class="remove-item" data-price="' + item.price + '" data-quantity="' + item.quantity + '" data-sku="' + item.sku + '" href="#order-items">Remove Item</a></small>';
       html += '</div> <!-- .row -->';
       html += '</td>';
       html += '</tr>';
