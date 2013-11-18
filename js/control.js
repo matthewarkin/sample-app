@@ -18,10 +18,22 @@ $(document).ready(function() {
     // data (or empty array if data is valid), and the "item" is a pass through
     // param.
     validateData: function (item, callback) {
-      // TODO: implement
+      // TODO: implement. Validate a color has been chosen.
       callback([], item);
+    },
+
+    //
+    // Validate the items order before moving on to checkout
+    //
+    // Takes a callback of the form function (invalidFields, item) { ... }
+    // where "invalidFields" will be an array of selector strings to identify
+    // elements in the UI with invalid data (or empty array if data is valid).
+    validateItemsData: function (callback) {
+      // TODO: implement. Validate there's at least one item in the list.
+      callback([]);
     }
   }
+
 
   //
   // Hook up navigation between pages.
@@ -32,7 +44,17 @@ $(document).ready(function() {
   $('#btn-goto-checkout').on('click', function(e) {
     e.preventDefault();
 
-    window.ui.routeTo('#order-buy');
+    // Validate the raw data
+    validators.validateItemsData(function (invalidFields, item) {
+      // If data is invalid, inform the UI using the element selectors
+      if (invalidFields && (invalidFields.length > 0)) {
+        window.ui.invalidItems(invalidFields);
+        return;
+      }
+
+      // The the user to data entry
+      window.ui.routeTo('#order-buy');
+    });
   });
 
   //

@@ -78,6 +78,7 @@ $(document).ready(function() {
     //       selector: '#order-product #select-size',
     //       value: 'small'
     //     }
+    //   }
     itemData: function (callback) {
       // Fetch item color data and its price
       var colorSelector = '#order-product #select-color';
@@ -178,8 +179,16 @@ $(document).ready(function() {
     invalidData: function (invalidFields) {
       // TODO: implement
       this.log && console.log('window.ui: invalid data notitications not yet implemented.');
-    }
+    },
 
+    //
+    // Invalid items in the list
+    //
+    // Takes a list of selector strings to show messages for
+    invalidItems: function (invalidFields) {
+      // TODO: implement
+      this.log && console.log('window.ui: invalid items data notitications not yet implemented.');
+    }
   };
 
   // Hook the UI controller to the global object
