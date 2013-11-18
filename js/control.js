@@ -168,6 +168,9 @@ $(document).ready(function() {
     window.ui.itemData(function (err, item) {
       if (err) throw new Error('Error while fetching data from UI');
 
+      // Show the item list
+      $('#order-items').show('fast');
+
       // Validate the raw data
       validators.validateData(item, function (invalidFields) {
         // If data is invalid, inform the UI using the element selectors
@@ -202,6 +205,11 @@ $(document).ready(function() {
   // Each "Remove Item"
   $(document).on("click", ".remove-item", function(elem) {
     var $a = $(elem.target);
+
+    // Hide the item list if there are no items
+    if (window.cart.order.getItems().length == 0) {
+      $('#order-items').hide('fast');
+    }
 
     // Build an item
     var item = {
