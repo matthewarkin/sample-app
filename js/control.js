@@ -93,7 +93,8 @@ $(document).ready(function() {
       if (! $.payment.validateCardNumber(data.number)) invalidFields.push('input[name=ccard]');
 
       // Verify the CVC against
-      if (! $.payment.validateCardCVC(data.number, data.cvc)) invalidFields.push('input[name=cvc]');
+      var cardType = $.payment.cardType(data.number);
+      if (! $.payment.validateCardCVC(data.cvc, cardType)) invalidFields.push('input[name=cvc]');
 
       callback(invalidFields);
     },
@@ -282,6 +283,7 @@ $(document).ready(function() {
               // Submit the order though Airbrite
               window.cart.placeOrder(function (err) {
                 // TODO: send a visual signal to the user, the service rejected the order
+                alert(err);  // DEBUG
               });
             });
           }
