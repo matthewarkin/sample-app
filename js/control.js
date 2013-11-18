@@ -27,12 +27,11 @@ $(document).ready(function() {
     //
     // Validate the items order before moving on to checkout
     //
-    // Takes a callback of the form function (invalidFields) { ... } where
-    // "invalidFields" will be an array of selector strings to identify
-    // elements in the UI with invalid data, or empty array if data is valid.
-    validateItemsData: function (callback) {
-      // TODO: implement. Validate there's at least one item in the list.
-      callback([]);
+    // Takes a callback of the form function (empty) { ... } where "empty" will
+    // be a boolean to describe whether there are any items in the item list.
+    validateItemsData: function (items, callback) {
+      var empty = (items.length === 0);
+      callback(empty);
     },
 
     //
@@ -100,11 +99,13 @@ $(document).ready(function() {
   $('#btn-goto-checkout').on('click', function(e) {
     e.preventDefault();
 
+    var items = window.cart.order.lineItems || [];
+
     // Validate the raw data
-    validators.validateItemsData(function (invalidFields) {
+    validators.validateItemsData(items, function (empty) {
       // If data is invalid, inform the UI using the element selectors
-      if (invalidFields.length > 0) {
-        window.ui.invalidData(invalidFields);
+      if (empty) {
+        // TODO: use a visual signal to show the item list is empty
         return;
       }
 
@@ -122,7 +123,7 @@ $(document).ready(function() {
     window.ui.routeTo('#order-product', '#order-items');
   });
 
-  //
+
   //
   // Hook up shopping cart events
   //
@@ -283,8 +284,6 @@ $(document).ready(function() {
   window.cart.init();
   window.ui.init();
 
-  //
-  // Initialize Airbrite service
   Airbrite.setPublishableKey('pk_test_7891f09e86196e4cca15b93141df3c4df7a92063');
   Airbrite.setPaymentToken({
     stripe: {
