@@ -124,17 +124,13 @@ $(document).ready(function() {
     //
 
     //
-    // Update the per item sub-total.
-    //
-    // Takes as input an object like the one returned from itemData(), and a number for the sub-total
-    addItem: function (item, total) {
-
-      // The item element inlines the code to call removeItem() in the controller.
-      var html  = '<tr>';
+    // Add a new item to the item list
+    addNewItem: function (item) {
+      var html  = '<tr data-color=' + item.color.value + ' data-size=' + item.size.value + '>';
       html += '<td colspan="3">';
       html += '<div class="row">';
       html += '<div style="margin-left:10px;" class="fr">';
-      html += '<strong>' + item.quantity + ' @ $' + item.price / 100 + '.00</strong>';
+      html += '<strong><span class="quantity">' + item.quantity + '</span> @ $<span class="price">' + item.price / 100 + '.00</strong></span>';
       html += '</div>';
       html += '<div>';
       html += '<strong>KOala</strong>';
@@ -158,6 +154,43 @@ $(document).ready(function() {
 
       // Inject the new item to the list
       $('#order-product tbody').append(html);
+    },
+
+    //
+    // Add to the quantity of the item in the item list
+    incrementItem: function (item, elem) {
+      var q = parseInt(item.quantity, 10);
+      var quantity = parseInt($('.quantity', elem).text(), 10) + q;
+
+      // Update values displayed
+      $('.quantity', elem).text(quantity);
+
+      // Update values for the remove-item control
+      $('.remove-item', elem).data('quantity', quantity);
+    },
+
+    //
+    // Update the per item sub-total.
+    //
+    // Takes as input an object like the one returned from itemData(), and a number for the sub-total
+    addItem: function (item, total) {
+      var that = this;
+      console.dir(item);
+
+      // See if this product is already on the list
+      var found = false;
+      $('#order-product tbody tr').each(function (i, e) {
+        if (($(e).data('color') === item.color.value) && ($(e).data('size') === item.size.value)) {
+          that.config.log && console.log('window.ui: incrementing quantity in existing item');
+          that.incrementItem(item, e);
+          found = true;
+        }
+      });
+      if (! found) {
+        // Add a new item to the list
+        that.config.log && console.log('window.ui: adding new item to the list');
+        that.addNewItem(item);
+      }
 
       // Update the subtotal
       $('#order-product #subtotal').text(total / 100 + '.00');
@@ -177,10 +210,6 @@ $(document).ready(function() {
       // Get the parent element of the item in the list
       var itemElem = $removeElem.parent().parent().parent().parent();
 
-      // Remove the item element from the list
-      itemElem.remove();
-      this.config.log && console.log('window.ui: removed item.');
-
       // Update the subtotal
       $('#order-product #subtotal').text(total / 100);
 
@@ -189,6 +218,10 @@ $(document).ready(function() {
         $('#order-items').hide('fast');
         $('#btn-goto-checkout').hide('fast');
       }
+
+      // Remove the item element from the list
+      itemElem.remove();
+      this.config.log && console.log('window.ui: removed item.');
     },
 
     //
