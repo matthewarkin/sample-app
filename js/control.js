@@ -18,19 +18,42 @@ $(document).ready(function() {
     // data (or empty array if data is valid), and the "item" is a pass through
     // param.
     validateData: function (item, callback) {
-      // TODO: implement. Validate a color has been chosen.
-      callback([], item);
+      var invalidFields = [];
+      if (!item.color || !item.color.value) {
+        invalidFields.push('#select-color');
+      }
+      callback(invalidFields, item);
     },
 
     //
     // Validate the items order before moving on to checkout
     //
-    // Takes a callback of the form function (invalidFields, item) { ... }
+    // Takes a callback of the form function (invalidFields) { ... }
     // where "invalidFields" will be an array of selector strings to identify
     // elements in the UI with invalid data (or empty array if data is valid).
     validateItemsData: function (callback) {
       // TODO: implement. Validate there's at least one item in the list.
       callback([]);
+    },
+
+    //
+    // User email validation
+    //
+    // Takes an object 'data' with a string field for each personal data
+    // ('email'), and a function of the form function (invalidFields, data)
+    // {...}  where "invalidFields" will be an array of selector strings to
+    // identify elements in the UI with invalid data (or empty array if data is
+    // valid), and the "item" is a pass through param.
+    validatePersonalData: function (data, callback) {
+      // Check for valid email
+      var email = $.trim(data.email);
+      var invalidFields = [];
+
+      var emailIsValid =  (email.length > 0 && email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i));
+      if (! emailIsValid) {
+        invalidFields = ['#user-email'];
+      }
+      callback(invalidFields, data);
     }
   }
 
@@ -47,7 +70,7 @@ $(document).ready(function() {
     // Validate the raw data
     validators.validateItemsData(function (invalidFields, item) {
       // If data is invalid, inform the UI using the element selectors
-      if (invalidFields && (invalidFields.length > 0)) {
+      if (invalidFields.length > 0) {
         window.ui.invalidItems(invalidFields);
         return;
       }
@@ -101,7 +124,7 @@ $(document).ready(function() {
       // Validate the raw data
       validators.validateData(item, function (invalidFields, item) {
         // If data is invalid, inform the UI using the element selectors
-        if (invalidFields && (invalidFields.length > 0)) {
+        if (invalidFields.length > 0) {
           window.ui.invalidData(invalidFields);
           return;
         }
@@ -157,6 +180,30 @@ $(document).ready(function() {
   //
   // "place Order"
   $('btn-checkout').on('click', function (e) {
+  });
+
+
+  //
+  // Hook the validation of user information: personal, shipping and payment.
+  //
+
+  //
+  // Validate personal information: email
+  $('#user-email').on('blur', function (e) {
+    var data = {
+      email: $(e.target).val()
+    }
+
+    validators.validatePersonalData(data, function (invalidFields, customerData) {
+      // If data is invalid, inform the UI using the element selectors
+      if (invalidFields.length > 0) {
+        window.ui.invalidData(invalidFields);
+        return;
+      }
+
+      // Update the customer information in the order
+      window.cart.updateCustomer(customerData);
+    });
   });
 
 
