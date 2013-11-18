@@ -200,6 +200,12 @@ $(document).ready(function() {
 
       // Show the big checkout button
       $('#btn-goto-checkout').show('fast');
+
+      // Scroll to the bottom of the page
+      $('html, body').animate({
+        scrollTop: $(document).height()
+      }, this.config.routeTransitionDuration);
+
     },
 
     //
