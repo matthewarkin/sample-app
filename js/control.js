@@ -63,13 +63,19 @@ $(document).ready(function() {
   //
   // React to changes in "choose color" of the item form
   $('#order-product #select-color').on('change', function (e) {
-    console.log('Not implemented yet');
+    // Update the item total
+    var price = $('#select-color option:selected').data('price');
+    var quantity = parseInt($('.select-quantity').val(), 10);
+    $('#item-total-price').text('$' + price * quantity / 100);
   });
 
   //
   // React to changes in quantity of the item form
   $('#order-product .select-quantity').on('change', function (e) {
-    console.log('Not implemented yet');
+    // Update the item total
+    var price = $('#select-color option:selected').data('price');
+    var quantity = parseInt($('.select-quantity').val(), 10);
+    $('#item-total-price').text('$' + price * quantity / 100);
   });
 
   //
