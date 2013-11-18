@@ -134,7 +134,7 @@ $(document).ready(function() {
       html += '<td colspan="3">';
       html += '<div class="row">';
       html += '<div style="margin-left:10px;" class="fr">';
-      html += '<strong>' + item.quantity + ' @ $' + item.price / 100 + '</strong>';
+      html += '<strong>' + item.quantity + ' @ $' + item.price / 100 + '.00</strong>';
       html += '</div>';
       html += '<div>';
       html += '<strong>KOala</strong>';
@@ -142,7 +142,7 @@ $(document).ready(function() {
       html += '</div> <!-- .row -->';
       html += '<div class="row">';
       html += '<div>';
-      html += 'Choose a color<strong>&nbsp;&nbsp;' + item.color.value + '</strong>';
+      html += 'Choose a color?<strong>&nbsp;&nbsp;' + item.color.value + '</strong>';
       html += '</div>';
       html += '</div> <!-- .row -->';
       html += '<div class="row">';
@@ -160,7 +160,7 @@ $(document).ready(function() {
       $('#order-product tbody').append(html);
 
       // Update the subtotal
-      $('#order-product #subtotal').text(total / 100);
+      $('#order-product #subtotal').text(total / 100 + '.00');
     },
 
     //

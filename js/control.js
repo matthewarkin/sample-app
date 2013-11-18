@@ -121,7 +121,7 @@ $(document).ready(function() {
       }
 
       // Update total before moving to the order-buy page
-      $('.label-summary-total').text('$' + window.cart.order.fullPrice / 100);
+      $('.label-summary-total').text('$' + window.cart.order.fullPrice / 100 + '.00');
 
       // The the user to data entry
       window.ui.routeTo('#order-buy');
@@ -149,7 +149,7 @@ $(document).ready(function() {
     // Update the item total
     var price = $('#select-color option:selected').data('price');
     var quantity = parseInt($('.select-quantity').val(), 10);
-    $('#item-total-price').text('$' + price * quantity / 100);
+    $('#item-total-price').text('$' + price * quantity / 100 + '.00');
   });
 
   //
@@ -158,7 +158,7 @@ $(document).ready(function() {
     // Update the item total
     var price = $('#select-color option:selected').data('price');
     var quantity = parseInt($('.select-quantity').val(), 10);
-    $('#item-total-price').text('$' + price * quantity / 100);
+    $('#item-total-price').text('$' + price * quantity / 100 + '.00');
   });
 
   //
