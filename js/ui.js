@@ -161,6 +161,12 @@ $(document).ready(function() {
 
       // Update the subtotal
       $('#order-product #subtotal').text(total / 100 + '.00');
+
+      // Show the item list
+      $('#order-items').show('fast');
+
+      // Show the big checkout button
+      $('#btn-goto-checkout').show('fast');
     },
 
     //
@@ -177,7 +183,12 @@ $(document).ready(function() {
 
       // Update the subtotal
       $('#order-product #subtotal').text(total / 100);
-      this.config.log && console.log('window.ui: updated sub-total.');
+
+      // Hide the item list and the big checkout button if there are no items in the list
+      if (window.cart.order.getItems().length == 0) {
+        $('#order-items').hide('fast');
+        $('#btn-goto-checkout').hide('fast');
+      }
     },
 
     //

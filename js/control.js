@@ -176,9 +176,6 @@ $(document).ready(function() {
           return;
         }
 
-        // Show the item list
-        $('#order-items').show('fast');
-
         // Build an item object for the cart
         var itemData = {
           sku: item.sku,
@@ -223,11 +220,6 @@ $(document).ready(function() {
 
       // Remove the item from the item list in the UI
       window.ui.removeItem($a, window.cart.order.fullPrice);
-
-      // Hide the item list if there are no items
-      if (window.cart.order.getItems().length == 0) {
-        $('#order-items').hide('fast');
-      }
     });
   });
 
