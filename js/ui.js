@@ -26,6 +26,14 @@ $(document).ready(function() {
       // Set the starting route to be the products page
       this.routes.current = this.routes.products;
 
+      // Setup validation reaction
+      var that = this;
+      $(that.validationNotifications).each(function (i, e) {
+        $(e.selector).on('focusout', function (event) {
+          that.clearInvalidNotifications([e.selector]);
+        })
+      });
+
       this.config.log && console.log('window.ui component initialized');
     },
 
@@ -172,23 +180,45 @@ $(document).ready(function() {
     // Validation notifications
     //
 
+    validationNotifications: [{
+      selector: "#user-email",
+      text: 'Please enter your e-mail address'
+    }, {
+      selector: "input[name=name]",
+      text: 'Please enter your full name'
+    }, {
+      selector: "input[name=street]",
+      text: 'Please enter your street address'
+    }, {
+      selector: "input[name=city]",
+      text: 'Please enter your city'
+    }, {
+      selector: "input[name=zip]",
+      text: 'Please enter your zip'
+    }],
+
+    //
+    // Clear the invalid item field notitifications
+    clearInvalidNotifications: function (selectors) {
+      $(selectors.join(', ')).removeClass('input-error');
+    },
+
+    //
+    // Trigger the invalid item field notification
+    setInvalidNotifications: function (selectors) {
+      $(selectors.join(', ')).addClass('input-error');
+    },
+
     //
     // Invalid item fields
     //
     // Takes a list of selector strings to show messages for
     invalidData: function (invalidFields) {
-      // TODO: implement
-      this.log && console.log('window.ui: invalid fields: ' + JSON.stringify(invalidFields));
-      this.log && console.log('window.ui: invalid data notitications not yet implemented.');
-    },
+      // Reset the invalidation fields
+      this.clearInvalidNotifications(invalidFields);
+      this.setInvalidNotifications(invalidFields);
 
-    //
-    // Invalid items in the list
-    //
-    // Takes a list of selector strings to show messages for
-    invalidPersonalData: function (invalidFields) {
-      // TODO: implement
-      this.log && console.log('window.ui: invalid personal data notitications not yet implemented.');
+      this.config.log && console.log('window.ui: invalid fields: ' + JSON.stringify(invalidFields));
     }
   };
 

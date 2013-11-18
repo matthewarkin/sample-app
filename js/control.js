@@ -21,7 +21,7 @@ $(document).ready(function() {
       if (!item.color || !item.color.value) {
         invalidFields.push('#select-color');
       }
-      callback(invalidFields, item);
+      callback(invalidFields);
     },
 
     //
@@ -51,7 +51,7 @@ $(document).ready(function() {
       if (! emailIsValid) {
         invalidFields = ['#user-email'];
       }
-      callback(invalidFields, data);
+      callback(invalidFields);
     },
 
     //
@@ -74,9 +74,9 @@ $(document).ready(function() {
       if (! data.city) invalidFields.push('input[name=city]');
 
       // zip must not be empty, and must be a number
-      if ((! data.zip) || isNaN(parseInt(data.zip, 10))) invalidFields.push('input[name=zip]');
+      if (! (data.zip && (parseInt(data.zip, 10) && isFinite(data.zip))) ) invalidFields.push('input[name=zip]');
 
-      callback(invalidFields, data);
+      callback(invalidFields);
     },
 
     //
@@ -86,7 +86,7 @@ $(document).ready(function() {
 
       // TODO: implement
 
-      callback(invalidFields, data);
+      callback(invalidFields);
     },
   }
 
@@ -129,14 +129,20 @@ $(document).ready(function() {
 
   //
   // React to changes in "choose color" of the item form
-  $('#order-product #select-color').on('change', function (e) {
-    console.log('Not implemented yet');
+  $('#order-product #select-color').on('change', function () {
+    // Update the item total
+    var price = $('#select-color option:selected').data('price');
+    var quantity = parseInt($('.select-quantity').val(), 10);
+    $('#item-total-price').text('$' + price * quantity / 100);
   });
 
   //
   // React to changes in quantity of the item form
   $('#order-product .select-quantity').on('change', function (e) {
-    console.log('Not implemented yet');
+    // Update the item total
+    var price = $('#select-color option:selected').data('price');
+    var quantity = parseInt($('.select-quantity').val(), 10);
+    $('#item-total-price').text('$' + price * quantity / 100);
   });
 
   //
@@ -254,7 +260,7 @@ $(document).ready(function() {
             // Associate the data to the order
             window.cart.updateCustomer(customerData);
             window.cart.updateShippingAddress(shippingAddressData);
-            window.cart.uddatePayment(paymentData);
+            window.cart.updatePayment(paymentData);
 
             // Submit the order though Airbrite
             window.cart.placeOrder(function (err) {
@@ -263,30 +269,6 @@ $(document).ready(function() {
           }
         });
       });
-    });
-  });
-
-
-  //
-  // Hook the validation of user information: personal, shipping and payment.
-  //
-
-  //
-  // Validate personal information: email
-  $('#user-email').on('blur', function (e) {
-    var customerData = {
-      email: $(e.target).val()
-    }
-
-    validators.validatePersonalData(customerData, function (invalidFields) {
-      // If data is invalid, inform the UI using the element selectors
-      if (invalidFields.length > 0) {
-        window.ui.invalidData(invalidFields);
-        return;
-      }
-
-      // Update the customer information in the order
-      window.cart.updateCustomer(customerData);
     });
   });
 
