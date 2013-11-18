@@ -13,10 +13,9 @@ $(document).ready(function() {
     // Validate the item data
     //
     // Takes a item object as it comes from the UI, and a callback of the form
-    // function (invalidFields, item) { ... } where "invalidFields" will be an
-    // array of selector strings to identify elements in the UI with invalid
-    // data (or empty array if data is valid), and the "item" is a pass through
-    // param.
+    // function (invalidFields) { ... } where "invalidFields" will be an array
+    // of selector strings to identify elements in the UI with invalid data, or
+    // empty array if data is valid.
     validateData: function (item, callback) {
       var invalidFields = [];
       if (!item.color || !item.color.value) {
@@ -28,9 +27,9 @@ $(document).ready(function() {
     //
     // Validate the items order before moving on to checkout
     //
-    // Takes a callback of the form function (invalidFields) { ... }
-    // where "invalidFields" will be an array of selector strings to identify
-    // elements in the UI with invalid data (or empty array if data is valid).
+    // Takes a callback of the form function (invalidFields) { ... } where
+    // "invalidFields" will be an array of selector strings to identify
+    // elements in the UI with invalid data, or empty array if data is valid.
     validateItemsData: function (callback) {
       // TODO: implement. Validate there's at least one item in the list.
       callback([]);
@@ -40,10 +39,9 @@ $(document).ready(function() {
     // User email validation
     //
     // Takes an object 'data' with a string field for each personal data
-    // ('email'), and a function of the form function (invalidFields, data)
-    // {...}  where "invalidFields" will be an array of selector strings to
-    // identify elements in the UI with invalid data (or empty array if data is
-    // valid), and the "item" is a pass through param.
+    // ('email'), and a function of the form function (invalidFields) {...}
+    // where "invalidFields" will be an array of selector strings to identify
+    // elements in the UI with invalid data, or empty array if data is valid.
     validatePersonalData: function (data, callback) {
       // Check for valid email
       var email = $.trim(data.email);
@@ -54,7 +52,42 @@ $(document).ready(function() {
         invalidFields = ['#user-email'];
       }
       callback(invalidFields, data);
-    }
+    },
+
+    //
+    // Shipment validation
+    //
+    // Takes an object 'data' with a string field for each shipment data , and
+    // a function of the form function (invalidFields) {...}  where
+    // "invalidFields" will be an array of selector strings to identify
+    // elements in the UI with invalid data, or empty array if data is valid.
+    validateShippingAddress: function (data, callback) {
+      var invalidFields = [];
+
+      // Name must not be empty
+      if (! data.name) invalidFields.push('input[name=name]');
+
+      // line1 must not be empty
+      if (! data.line1) invalidFields.push('input[name=street]');
+
+      // city must not be empty
+      if (! data.city) invalidFields.push('input[name=city]');
+
+      // zip must not be empty, and must be a number
+      if ((! data.zip) || isNaN(parseInt(data.zip, 10))) invalidFields.push('input[name=zip]');
+
+      callback(invalidFields, data);
+    },
+
+    //
+    // Payment validation
+    validatePaymentData: function (data, callback) {
+      var invalidFields = [];
+
+      // TODO: implement
+
+      callback(invalidFields, data);
+    },
   }
 
 
@@ -68,10 +101,10 @@ $(document).ready(function() {
     e.preventDefault();
 
     // Validate the raw data
-    validators.validateItemsData(function (invalidFields, item) {
+    validators.validateItemsData(function (invalidFields) {
       // If data is invalid, inform the UI using the element selectors
       if (invalidFields.length > 0) {
-        window.ui.invalidItems(invalidFields);
+        window.ui.invalidData(invalidFields);
         return;
       }
 
@@ -90,14 +123,6 @@ $(document).ready(function() {
   });
 
   //
-  // "Place Order" link takes you to "#order-confirmation"
-  $('#btn-checkout').on('click', function(e) {
-    e.preventDefault();
-
-    // Show Order Confirmation (third) page
-    window.ui.routeTo('#order-confirmation');
-  });
-
   //
   // Hook up shopping cart events
   //
@@ -122,7 +147,7 @@ $(document).ready(function() {
       if (err) throw new Error('Error while fetching data from UI');
 
       // Validate the raw data
-      validators.validateData(item, function (invalidFields, item) {
+      validators.validateData(item, function (invalidFields) {
         // If data is invalid, inform the UI using the element selectors
         if (invalidFields.length > 0) {
           window.ui.invalidData(invalidFields);
@@ -176,10 +201,69 @@ $(document).ready(function() {
     });
   });
 
-
   //
   // "place Order"
-  $('btn-checkout').on('click', function (e) {
+  $('#btn-checkout').on('click', function () {
+    var allInvalidFields = [];
+
+    // Validate personal data
+    var customerData = {
+      email: $('#user-email').val()
+    }
+    validators.validatePersonalData(customerData, function (invalidFields) {
+      // Accumulate any invalid fields found
+      if (invalidFields.length > 0) $.merge(allInvalidFields, invalidFields);
+
+      // Validate shipping information
+      var shippingAddressData = {
+        name: $('input[name=name]').val(),
+        line1: $('input[name=street]').val(),
+        city: $('input[name=city]').val(),
+        state: $('select[name=state]').val(),
+        zip: $('input[name=zip]').val(),
+        country: $('select[name=country]').val()
+      }
+      validators.validateShippingAddress(shippingAddressData, function (invalidFields) {
+        // Accumulate any invalid fields found
+        if (invalidFields.length > 0) $.merge(allInvalidFields, invalidFields);
+
+        // Validate payment information
+        var paymentData = {
+          currency: 'USD',
+          number: $('input[name=ccard]').val(),
+          cvc: $('input[name=cvc]').val(),
+          exp_month: $('input[name=card_exp_month]').val(),
+          exp_year: $('input[name=card_exp_year]').val(),
+          amount: window.cart.order.fullPrice,
+        }
+        validators.validatePaymentData(paymentData, function (invalidFields) {
+          // Accumulate any invalid fields found
+          if (invalidFields.length > 0) $.merge(allInvalidFields, invalidFields);
+
+          //
+          // Any extra checks here
+          //
+
+          // Resolve validation errors
+          if (allInvalidFields.length > 0) {
+            window.ui.invalidData(allInvalidFields);
+
+            // TODO: send a visual signal via the "Place Order" button
+          }
+          else {
+            // Associate the data to the order
+            window.cart.updateCustomer(customerData);
+            window.cart.updateShippingAddress(shippingAddressData);
+            window.cart.uddatePayment(paymentData);
+
+            // Submit the order though Airbrite
+            window.cart.placeOrder(function (err) {
+              // TODO: send a visual signal to the user, the service rejected the order
+            });
+          }
+        });
+      });
+    });
   });
 
 
@@ -190,11 +274,11 @@ $(document).ready(function() {
   //
   // Validate personal information: email
   $('#user-email').on('blur', function (e) {
-    var data = {
+    var customerData = {
       email: $(e.target).val()
     }
 
-    validators.validatePersonalData(data, function (invalidFields, customerData) {
+    validators.validatePersonalData(customerData, function (invalidFields) {
       // If data is invalid, inform the UI using the element selectors
       if (invalidFields.length > 0) {
         window.ui.invalidData(invalidFields);

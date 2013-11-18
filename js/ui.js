@@ -178,6 +178,7 @@ $(document).ready(function() {
     // Takes a list of selector strings to show messages for
     invalidData: function (invalidFields) {
       // TODO: implement
+      this.log && console.log('window.ui: invalid fields: ' + JSON.stringify(invalidFields));
       this.log && console.log('window.ui: invalid data notitications not yet implemented.');
     },
 
@@ -185,9 +186,9 @@ $(document).ready(function() {
     // Invalid items in the list
     //
     // Takes a list of selector strings to show messages for
-    invalidItems: function (invalidFields) {
+    invalidPersonalData: function (invalidFields) {
       // TODO: implement
-      this.log && console.log('window.ui: invalid items data notitications not yet implemented.');
+      this.log && console.log('window.ui: invalid personal data notitications not yet implemented.');
     }
   };
 
