@@ -30,7 +30,7 @@ $(document).ready(function() {
     // Takes a callback of the form function (empty) { ... } where "empty" will
     // be a boolean to describe whether there are any items in the item list.
     validateItemsData: function (items, callback) {
-      var empty = (items.length === 0);
+      var empty = (items.length == 0) ? true : false;
       callback(empty);
     },
 
@@ -99,7 +99,7 @@ $(document).ready(function() {
   $('#btn-goto-checkout').on('click', function(e) {
     e.preventDefault();
 
-    var items = window.cart.order.lineItems || [];
+    var items = window.cart.order.getItems() || [];
 
     // Validate the raw data
     validators.validateItemsData(items, function (empty) {
