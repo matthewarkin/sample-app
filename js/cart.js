@@ -73,57 +73,6 @@
       callback(null);
     },
 
-    //
-    // Add credit/debit card information to the order
-    //
-    // Takes an object with card information:;
-    //  {
-    //    number: ‘4242424242424242’,
-    //    cvc: ‘892’,
-    //    exp_month: ‘11’,
-    //    exp_year: ‘16’,
-    //    amount: 123400,
-    //    currency: 'usd'
-    //  }
-    //
-    //  The callback takes an error param, which is null if there were no errors.
-    addPayment: function (ccard, callback) {
-      // Pass the card data through to Airbrite order
-      this.order.addPayment(ccard, function (response, message) {
-        // Failed registering card information
-        if (response === 'error') {
-          this.config.log && console.log(message);
-          callback(message);
-          return;
-        }
-
-        // Payment information was accepted
-        callback(null);
-      });
-    },
-
-    //
-    // Set or update customer data in the order
-    updateCustomer: function (customerData) {
-      var currentData = this.order.get('customer');
-      if (! currentData) this.order.setCustomer(customerData);
-      else {
-        $.extend(currentData, customerData);
-        this.order.setCustomer(currentData);
-      }
-    },
-
-    //
-    // Set or update shipping address data in the order
-    updateShippingAddress: function (shippingAddressData) {
-      var currentData = this.order.get('shippingAddress');
-      if (! currentData) this.order.setShippingAddress(shippingAddressData);
-      else {
-        $.extend(currentData, shippingAddressData);
-        this.order.setShippingAddress(currentData);
-      }
-    },
-
 
     //
     // Checkout the order to Airbrite

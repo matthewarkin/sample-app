@@ -181,6 +181,9 @@ $(document).ready(function() {
     //
 
     validationNotifications: [{
+      selector: '#select-color',
+      text: ''
+    }, {
       selector: "#user-email",
       text: 'Please enter your e-mail address'
     }, {

@@ -246,10 +246,6 @@ $(document).ready(function() {
           // Accumulate any invalid fields found
           if (invalidFields.length > 0) $.merge(allInvalidFields, invalidFields);
 
-          //
-          // Any extra checks here
-          //
-
           // Resolve validation errors
           if (allInvalidFields.length > 0) {
             window.ui.invalidData(allInvalidFields);
@@ -258,13 +254,20 @@ $(document).ready(function() {
           }
           else {
             // Associate the data to the order
-            window.cart.updateCustomer(customerData);
-            window.cart.updateShippingAddress(shippingAddressData);
-            window.cart.updatePayment(paymentData);
+            window.cart.order.setCustomer(customerData);
+            window.cart.order.setShippingAddress(shippingAddressData);
+            window.cart.order.addPayment(ccard, function (response, message) {
+              // Failed registering card information
+              if (response === 'error') {
+                console.log(message);
 
-            // Submit the order though Airbrite
-            window.cart.placeOrder(function (err) {
-              // TODO: send a visual signal to the user, the service rejected the order
+                  // TODO: send a visual signal to the user, the service rejected the ccard information
+              }
+
+              // Submit the order though Airbrite
+              window.cart.placeOrder(function (err) {
+                // TODO: send a visual signal to the user, the service rejected the order
+              });
             });
           }
         });
