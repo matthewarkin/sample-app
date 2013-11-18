@@ -79,11 +79,13 @@
     //
     //  The callback takes an error param, which is null if there were no errors.
     placeOrder: function (callback) {
+      var that = this;
+
       // Submit the order to Airbrite
       this.order.submit(function (response, message) {
         // Failed registering card information
         if (response === 'error') {
-          this.config.log && console.log(message);
+          that.config.log && console.log(message);
           callback(message);
           return;
         }

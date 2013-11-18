@@ -269,22 +269,33 @@ $(document).ready(function() {
             // TODO: send a visual signal via the "Place Order" button
           }
           else {
+
+            // Disable the checkout button while the order is processed
+            $('#btn-checkout').attr('disabled', 'disabled');
+
             // Associate the data to the order
             window.cart.order.setCustomer(customerData);
             window.cart.order.setShippingAddress(shippingAddressData);
-            window.cart.order.addPayment(ccard, function (response, message) {
-              // Failed registering card information
+            window.cart.order.addPayment(paymentData, function (response, message) {
+              // Failed processing payment information
               if (response === 'error') {
-                console.log(message);
+                // TODO: send a visual signal to the user, the service rejected the ccard information
+                alert(message);
 
-                  // TODO: send a visual signal to the user, the service rejected the ccard information
+                // Disable the checkout button while the call is being made
+                $('#btn-checkout').removeAttr('disabled');
+
+              } else {
+
+                // Submit the order though Airbrite
+                window.cart.placeOrder(function (err) {
+                  // TODO: send a visual signal to the user, the service rejected the order
+                  alert(err);
+
+                  // Disable the checkout button while the call is being made
+                  $('#btn-checkout').removeAttr('disabled');
+                });
               }
-
-              // Submit the order though Airbrite
-              window.cart.placeOrder(function (err) {
-                // TODO: send a visual signal to the user, the service rejected the order
-                alert(err);  // DEBUG
-              });
             });
           }
         });
