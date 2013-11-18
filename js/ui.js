@@ -33,6 +33,10 @@ $(document).ready(function() {
           that.clearInvalidNotifications([e.selector]);
         })
       });
+      // including payment validation
+      $('.numeric').payment('restrictNumeric');
+      $('input[name=ccard]').payment('formatCardNumber');
+      $('input[name=cvc]').payment('formatCardCVC');
 
       this.config.log && console.log('window.ui component initialized');
     },
@@ -181,6 +185,18 @@ $(document).ready(function() {
     //
 
     validationNotifications: [{
+      selector: "input[name=cvc]",
+      text: ''
+    }, {
+      selector: "input[name=ccard]",
+      text: ''
+    }, {
+      selector: "select[name=card_exp_month]",
+      text: ''
+    }, {
+      selector: "select[name=card_exp_year]",
+      text: ''
+    }, {
       selector: '#select-color',
       text: ''
     }, {

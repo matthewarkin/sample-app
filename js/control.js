@@ -83,7 +83,17 @@ $(document).ready(function() {
     validatePaymentData: function (data, callback) {
       var invalidFields = [];
 
-      // TODO: implement
+      // Verify card expiration
+      if (! $.payment.validateCardExpiry(data.exp_month, data.exp_year)) {
+        invalidFields.push('select[name=card_exp_month]');
+        invalidFields.push('select[name=card_exp_year]');
+      }
+
+      // Verify credit card number
+      if (! $.payment.validateCardNumber(data.number)) invalidFields.push('input[name=ccard]');
+
+      // Verify the CVC against
+      if (! $.payment.validateCardCVC(data.number, data.cvc)) invalidFields.push('input[name=cvc]');
 
       callback(invalidFields);
     },
@@ -243,8 +253,8 @@ $(document).ready(function() {
           currency: 'USD',
           number: $('input[name=ccard]').val(),
           cvc: $('input[name=cvc]').val(),
-          exp_month: $('input[name=card_exp_month]').val(),
-          exp_year: $('input[name=card_exp_year]').val(),
+          exp_month: $('select[name=card_exp_month]').val(),
+          exp_year: $('select[name=card_exp_year]').val(),
           amount: window.cart.order.fullPrice,
         }
         validators.validatePaymentData(paymentData, function (invalidFields) {
