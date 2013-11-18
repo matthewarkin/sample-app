@@ -168,9 +168,6 @@ $(document).ready(function() {
     window.ui.itemData(function (err, item) {
       if (err) throw new Error('Error while fetching data from UI');
 
-      // Show the item list
-      $('#order-items').show('fast');
-
       // Validate the raw data
       validators.validateData(item, function (invalidFields) {
         // If data is invalid, inform the UI using the element selectors
@@ -178,6 +175,9 @@ $(document).ready(function() {
           window.ui.invalidData(invalidFields);
           return;
         }
+
+        // Show the item list
+        $('#order-items').show('fast');
 
         // Build an item object for the cart
         var itemData = {
@@ -206,11 +206,6 @@ $(document).ready(function() {
   $(document).on("click", ".remove-item", function(elem) {
     var $a = $(elem.target);
 
-    // Hide the item list if there are no items
-    if (window.cart.order.getItems().length == 0) {
-      $('#order-items').hide('fast');
-    }
-
     // Build an item
     var item = {
       quantity: $a.data('quantity'),
@@ -228,6 +223,11 @@ $(document).ready(function() {
 
       // Remove the item from the item list in the UI
       window.ui.removeItem($a, window.cart.order.fullPrice);
+
+      // Hide the item list if there are no items
+      if (window.cart.order.getItems().length == 0) {
+        $('#order-items').hide('fast');
+      }
     });
   });
 
