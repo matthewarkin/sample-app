@@ -32,6 +32,9 @@ $(document).ready(function() {
   $('#btn-goto-checkout').on('click', function(e) {
     e.preventDefault();
 
+    // Update total before moving to the order-buy page
+    $('.label-summary-total').text('$' + window.cart.order.fullPrice / 100);
+
     window.ui.routeTo('#order-buy');
   });
 
