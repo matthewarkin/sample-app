@@ -289,11 +289,20 @@ $(document).ready(function() {
 
                 // Submit the order though Airbrite
                 window.cart.placeOrder(function (err) {
-                  // TODO: send a visual signal to the user, the service rejected the order
-                  alert(err);
+                  if (err) {
+                    // TODO: send a visual signal to the user, the service rejected the order
+                    alert(err);
+                    return;
+                  }
 
                   // Disable the checkout button while the call is being made
                   $('#btn-checkout').removeAttr('disabled');
+
+                  // Update the confirmation with the order ID
+                  $('#order-confirmation .label-order-id').text(window.cart.order.get('_id'));
+
+                  // Navigate the user to the confirmation page
+                  window.ui.routeTo('#order-confirmation');
                 });
               }
             });
