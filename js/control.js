@@ -311,10 +311,10 @@ $(document).ready(function() {
   window.cart.init();
   window.ui.init();
 
-  Airbrite.setPublishableKey('pk_test_7891f09e86196e4cca15b93141df3c4df7a92063');
+  Airbrite.setPublishableKey('pk_test_ZmM0MjRiNzEtNDA0MS00YjVlLTk0NjYtMTU4NTE0NTkyOGM1');
   Airbrite.setPaymentToken({
     stripe: {
-      publishableKey: 'pk_test_nMd9IihA9sjwaMMeJAyZz7OZ'
+      publishableKey: 'pk_test_pl28Luc4dvgJq0Wgvdms7dTZ'
     }
   });
 });
