@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buy yourself a koala!</title>
+    <title>Hoverboard Checkout</title>
 
     <!-- Inherited styles -->
     <link rel="stylesheet" href="css/application-493e5c32eca800916c9b925f21e352fd.css" type="text/css">
@@ -39,35 +39,41 @@
       <div class="row nm" id="order-product">
 
         <div class="cover-container">
-          <img src="/img/shirt.jpg" class="cover-image">
+          <img src="img/hoverboard.jpg" class="cover-image">
+          <!-- <img src="img/koala.jpg" class="cover-image"> -->
         </div> <!-- .cover-container -->
 
         <div class="box-content">
           <div class="row">
-            <h1 data-cart-item-name="KOala" id="name">KOala</h1>
+            <h1 data-cart-item-name="hoverboard" id="name">Hoverboard</h1>
             <div class="row">
-              the koala product pitch
-              <p>product description</p>
+              <p>Hoverboards are the <strong>easiest way to hover</strong> and <strong>fly around your city</strong>.</p>
+              <ul>
+                <li><strong>Like a skateboard</strong>: Only instead of wheels, you float on happiness.</li>
+                <li><strong>Be amazing</strong>: Doing tricks has never been so easy and impressive.</li>
+                <li><strong>Ultimate riding experience</strong>: Be a part of the future by owning your own antigravity device.</li>
+              </ul>
             </div>
           </div>
         </div> <!-- .box-content -->
 
         <div class="box-content box-options">
           <div class="row">
-            <p class="subtitle"><strong>Choose a color</strong></p>
+            <p class="subtitle"><strong>Choose a Color:</strong></p>
             <select id="select-color" class="input-block-level select-option">
               <option value="">-- Please Select --</option>
-              <option value="Red" data-price="500" data-sku="koala-test-1">Red ( $5.00 )</option>
-              <option value="Blue" data-price="100" data-sku="koala-test-2">Blue ( $1.00 )</option>
-              <option value="Green" data-price="2000" data-sku="koala-test-3">Green ( $20.00 )</option>
+              <option value="Red" data-price="500" data-sku="koala-test-1">Red</option>
+              <option value="Blue" data-price="100" data-sku="koala-test-2">Blue</option>
+              <option value="Green" data-price="2000" data-sku="koala-test-3">Green</option>
             </select>
           </div> <!-- .row -->
 
           <div class="row">
-            <p class="subtitle"><strong>What Size?</strong></p>
+            <p class="subtitle"><strong>Choose a Size:</strong></p>
             <select id="select-size" class="input-block-level select-option">
-              <option value="small">small </option>
-              <option value="medium">medium </option>
+              <option value="">-- Please Select --</option>
+              <option value="small">Short</option>
+              <option value="medium">Long</option>
             </select>
           </div> <!-- .row -->
         </div>   <!-- .box-content.box-options -->
@@ -194,13 +200,13 @@
             <p class="title ac">Credit/Debit Card Information</p>
             <div class="row">
               <span class="credit-card-icon shop-cc-icon" id="unknown"></span>
-              <input type="tel" placeholder="Card Number" class="input-block-level numeric nm" name="ccard">
+              <input type="tel" placeholder="Card Number" class="input-block-level numeric nm" name="ccard" value="4242 4242 4242 4242" />
             </div> <!-- .row -->
 
             <div class="row">
               <div class="span6 no-clear">
                 <select name="card_exp_month" class="input-block-level nm">
-                  <option value="01">01 - January</option>
+                  <option value="01" selected>01 - January</option>
                   <option value="02">02 - February</option>
                   <option value="03">03 - March</option>
                   <option value="04">04 - April</option>
@@ -218,7 +224,7 @@
                 <select name="card_exp_year" class="input-block-level nm">
                   <option value="2013">2013</option>
                   <option value="2014">2014</option>
-                  <option value="2015">2015</option>
+                  <option value="2015" selected>2015</option>
                   <option value="2016">2016</option>
                   <option value="2017">2017</option>
                   <option value="2018">2018</option>
@@ -237,7 +243,7 @@
                 </select>
               </div> <!-- .span3.no-clear -->
               <div class="span3 no-clear">
-                <input type="tel" name="cvc" maxlength="4" placeholder="CVC" class="input-block-level numeric nm" />
+                <input type="tel" name="cvc" maxlength="4" placeholder="CVC" class="input-block-level numeric nm" value="123" />
               </div> <!-- .span3.no-clear -->
             </div>   <!-- .row -->
 
